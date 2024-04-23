@@ -11,7 +11,7 @@
 
 # evafs
 
-> Add a short description here!
+> A storage system middleware
 
 A longer description of your project goes here...
 
@@ -109,11 +109,13 @@ Then take a look into the `scripts` and `notebooks` folders.
 ## Contribution
 EvaFS employs [Tox](https://tox.wiki/en/stable/) to automate Package tasks such as packaging, testing and building.
 
+```bash
 tox -e docs  # to build your documentation
 tox -e build  # to build your package distribution
 tox -e publish  # to test your project uploads correctly in test.pypi.org
 tox -e publish -- --repository pypi  # to release your package to PyPI
 tox -av  # to list all the tasks available
+```
 
 <!-- pyscaffold-notes -->
 
