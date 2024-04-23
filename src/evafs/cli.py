@@ -4,20 +4,23 @@ __author__ = "sanchezcarlosjr"
 __copyright__ = "sanchezcarlosjr"
 __license__ = "MIT"
 
+from typing import Optional
 
-from evafs import setup_logging, _logger
-from evafs.webservice import WebService, serve
 import ray
+import typer
+from typing_extensions import Annotated
+
+from evafs import _logger, setup_logging
+from evafs.webservice import WebService, serve
 
 # ---- CLI ----
 # The functions defined in this section are wrappers around the main Python
 # API allowing them to be called directly from the terminal as a CLI
 # executable/script.
 
-import typer
-from typing import Optional
 
 app = typer.Typer()
+
 
 @app.command()
 def version():
@@ -25,27 +28,39 @@ def version():
 
 
 @app.command()
-def run_webapp(share=False):
+def run_webapp(
+    share: Annotated[bool, typer.Option(help="Share with Gradio servers.")] = False
+):
     _logger.info("Starting webapp..")
     from evafs.webapp import webapp
-    webapp.launch(share)
+
+    webapp.launch(share=share)
 
 
 @app.command()
 def run_webservice():
     """
-    The command initiates the webservice and maintains it in the background. Additionally,
-    this command is used to update the service.
+    The command initiates the webservice and maintains it in the background.
+    Additionally, this command is used to update the service.
     """
     _logger.info("Starting webservice...")
     ray.init()
     serve.run(WebService.bind(), route_prefix="/hello")
 
-def main(verbose: Optional[int] = typer.Option(0, '--verbose', '-v', count=True,
-                                               help="Increase verbosity by augmenting the count of 'v's, and enhance "
-                                                    "the total number of messages.")):
-    setup_logging(verbose*10)
+
+def main(
+    verbose: Optional[int] = typer.Option(
+        0,
+        "--verbose",
+        "-v",
+        count=True,
+        help="Increase verbosity by augmenting the count of 'v's, and enhance "
+        "the total number of messages.",
+    )
+):
+    setup_logging(verbose * 10)
     app()
+
 
 def run():
     app()
