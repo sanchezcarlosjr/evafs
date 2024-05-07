@@ -11,6 +11,7 @@ import typer
 from typing_extensions import Annotated
 
 from evafs import _logger, setup_logging
+from evafs.settings import create_server_client
 from evafs.webservice import WebService, serve
 
 # ---- CLI ----
@@ -25,6 +26,11 @@ app = typer.Typer()
 @app.command()
 def version():
     print(f"evafs {__version__}")
+
+
+@app.command()
+def login():
+    create_server_client()
 
 
 @app.command()
