@@ -8,10 +8,12 @@ from typing import Optional
 
 import ray
 import typer
+from rich import print
 from typing_extensions import Annotated
 
 from evafs import _logger, setup_logging
-from evafs.settings import create_server_client
+from evafs.auth_provider import auth
+from evafs.supabase_client import supabase_client
 from evafs.webservice import WebService, serve
 
 # ---- CLI ----
@@ -29,8 +31,21 @@ def version():
 
 
 @app.command()
-def login():
-    create_server_client()
+def login(
+    provider: Annotated[str, typer.Argument(help="Auth provider. GitHUb, Google.")] = ""
+):
+    auth.login(provider)
+
+
+@app.command()
+def logout():
+    auth.logout()
+
+
+@app.command()
+def read(table):
+    result = supabase_client.postgrest.table(table).select("*").execute()
+    print(result.data)
 
 
 @app.command()

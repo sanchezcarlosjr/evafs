@@ -7,4 +7,6 @@
     - https://docs.pytest.org/en/stable/writing_plugins.html
 """
 
-# import pytest
+import dotenv
+
+dotenv.load_dotenv()

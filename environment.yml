@@ -8,12 +8,9 @@ dependencies:
   - python>=3.6
   - pip
   # BASICS
-  - numpy
   - scipy
-  - pandas
   - pystow
   - tqdm
-  - click
   - ipython
   # VISUALIZATION
   - matplotlib

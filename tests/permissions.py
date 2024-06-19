@@ -1,7 +1,9 @@
-from evafs.supabase import supabase
+from evafs.supabase_client import supabase_client
 
 response = (
-    supabase.table("resources").select("parent,...valid_parent(parent:name)").execute()
+    supabase_client.table("resources")
+    .select("parent,...valid_parent(parent:name)")
+    .execute()
 )
 
 for x in response.data:
