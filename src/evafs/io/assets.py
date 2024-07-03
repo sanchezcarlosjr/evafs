@@ -29,13 +29,13 @@ def model(*subpath):
 
 def guess_type(path):
     """
-    Guesses the type of a file based on its path.
+    Guesses the type of file based on its path.
 
     Args:
         path (str): The path to the file.
 
     Returns:
-        str: The guessed MIME type of the file. If the file type is text, the MIME type is guessed using the `mimetypes.guess_type()` function. Otherwise, the file type is returned as is.
+        str: The guessed MIME type of the file.
     """
     mime = magic.Magic(mime=True)
     file_type = mime.from_file(path)
